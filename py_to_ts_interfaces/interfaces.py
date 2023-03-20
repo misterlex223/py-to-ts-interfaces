@@ -20,6 +20,7 @@ class InterfaceField:
     def get_name_and_type(line: str) -> Tuple[str, str]:
         """Take a line like "field_name: Union[None, int]" and return ("fieldName", "int")"""
         name, python_type = line.strip().split(": ")
+        print(name, python_type)
         name = to_camel_case(name)
         if "Union[" in python_type:
             python_type = python_type.removeprefix("Union[None, ").removeprefix("Union[")
@@ -41,14 +42,16 @@ class InterfaceDefinition:
     """Represent a python dataclass/typescript interface."""
     name: str
     fields: List[InterfaceField]
+    consecutive: bool
 
     def __init__(self, definition: List[str]):
+        self.consecutive = False
         self.name = definition[0].removeprefix("class ").strip(":")
         self.fields = [InterfaceField(line) for line in definition[1:]]
 
     def get_typescript(self) -> str:
         """Return the entire interface in typescript syntax (including indentation)."""
-        typescript_string = "export interface {0} {{\n".format(self.name)
+        typescript_string = "export type {0} = {{\n".format(self.name)
         for field in self.fields:
             typescript_string += "{}\n".format(field.get_typescript())
         typescript_string += "}"

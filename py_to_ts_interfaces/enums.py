@@ -20,8 +20,11 @@ class EnumDefinition:
     """Represent a python/typescript enum."""
     name: str
     elements: List[EnumElement]
+    consecutive: bool
 
     def __init__(self, definition: List[str]):
+        self.consecutive = False
+
         definition = [line for line in definition if
                       not line.startswith("    def") and
                       not line.startswith("        ")

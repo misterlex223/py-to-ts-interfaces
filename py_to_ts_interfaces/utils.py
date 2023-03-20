@@ -10,8 +10,18 @@ def to_camel_case(snake_str: str) -> str:
     """
     components = snake_str.split('_')
     # We capitalize the first letter of each component except the first one
-    # with the 'title' method and join them together.
     return components[0] + ''.join(x.title() for x in components[1:])
+    # with the 'title' method and join them together.
+
+
+def is_from_statement(line: str) -> bool:
+    """
+    Check if the given string is a from statement, e.g. "from typing import List"
+
+    :param line: The string to check (should be one line of code).
+    :return: True if the given string is a from statement.
+    """
+    return line.startswith("from ") and "import" in line
 
 
 def is_class_definition(line: str) -> bool:
@@ -33,3 +43,14 @@ def is_string_definition(line: str) -> bool:
     :return: True if the given string is a string definition.
     """
     return re.match("[a-zA-Z_]+.* = \".*\"", line) is not None
+
+
+def is_comment_definition(line: str) -> bool:
+    """
+    Check if the given string is a comment definition. e.g. # This is a comment
+
+    :param line: The string to check (should be one line of code).
+    :return: True if the given string is a comment definition.
+    """
+
+    return re.match("\s*#.*", line) is not None

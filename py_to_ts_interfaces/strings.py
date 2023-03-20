@@ -6,10 +6,12 @@ class StringDefinition:
     """Represent a string definition."""
     name: str
     value: str
-
+    consecutive: bool
+    
     def __init__(self, definition: List[str]):
         matches = re.match("([a-zA-Z_]+).* = \"(.*)\"", definition[0])
         if matches:
+            self.consecutive = True
             self.name = matches.group(1)
             self.value = matches.group(2)
 
