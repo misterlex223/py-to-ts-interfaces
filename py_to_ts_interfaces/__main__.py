@@ -67,7 +67,7 @@ def python_to_typescript_folder(input_path: str, output_path: str) -> None:
     :param input_path: A full or relative path to a folder containing .py files.
     :param output_path: A full or relative path to a folder which may not exist.
     """
-    for file in os.listdir(input_path):
+    for file in listdir(input_path):
         if file.endswith(".py") and file != "__init__.py":
             file_contents = read_file(path.join(input_path, file))
 

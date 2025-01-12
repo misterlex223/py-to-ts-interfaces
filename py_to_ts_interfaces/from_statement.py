@@ -26,7 +26,7 @@ class FromStatement:
 
     def get_typescript(self) -> str:
         """Return the import statement in typescript syntax."""
-        if self.package in FromStatement.SKIP_MODULES:
+        if FromStatement.SKIP_MODULES is not None and self.package in FromStatement.SKIP_MODULES:
             return ""
 
         typescript_string = "import {{ {0} }} from \'{1}\'\n".format(
